@@ -45,17 +45,21 @@ async function createContainer () {
     document.querySelector(".release").innerText = `Released on ${releaseDt}`;
 
     let charUrl = result.characters;
-    let outCharac=[];
     for(let i=0;i<5;i++){
         let inp = charUrl[i];
         async function foo(){
+            try {
             let inpUrl = await fetch(inp);
             let res = await inpUrl.json();
-            outCharac = res.aliases[0];
+            let outCharac = res.aliases[0];
             console.log("char",outCharac);
             document.querySelector(`#char${i+1}`).innerText = outCharac;
+            } catch(error){
+                console.log(error);
+            }   
         }
         foo();
     }
 }
 createContainer();
+
